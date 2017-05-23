@@ -46,7 +46,26 @@ class Jibby {
 
         this.hygiene -= 0.01;
         this.food -= 0.02;
-        this.happiness -= 0.015;       
+        this.happiness -= 0.015;     
+
+        if(this.hygiene < 20) {
+            this.div.style.backgroundImage = "url('images/dirty.png')"
+        }
+
+        if(this.food < 30) {
+            this.div.style.backgroundImage = "url('images/hungry.png')"
+        }
+
+        if(this.happiness < 10) {
+            this.div.style.backgroundImage = "url('images/sad.png')"
+        }
+
+        if(this.hygiene < 0 || this.food < 0 || this.happiness < 0) {
+            this.happiness = 0;
+            this.food = 0;
+            this.hygiene = 0;
+            this.behavior = new Dead(this);
+        }  
     }
 
     private onPet():void {

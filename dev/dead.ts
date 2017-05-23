@@ -3,6 +3,7 @@ class Dead implements Behavior {
     
     constructor(j: Jibby) {
         this.jibby = j;
+        this.performBehavior();
     }
 
     performBehavior(): void {
