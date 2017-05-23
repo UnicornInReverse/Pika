@@ -7,3 +7,17 @@ Jibby is een [tamagotchi](https://en.wikipedia.org/wiki/Tamagotchi) die je in le
 - Aaien. Door met de muis op Jibby te klikken geef je hem aandacht en wordt hij blij. 
 - Slapen. Als er een tijdje niks gebeurt valt Jibby in slaap. Daarvan wordt hij blij, maar als hij wakker is heeft hij wel honger.
 
+## UML
+
+UML geeft de game weer zoals hij nu is. Hij is zo opgesteld dat er gemakkelijk nieuw behavior toegevoegd kan worden. 
+
+https://unicorninreverse.github.io/Jibby/JibbyUML.png
+
+## Programmeer principes
+
+Interface: behavior van Jibby
+Static Utility Method: nog niet geïmplementeerd, gaat een class worden die berekeningen doet van Jibby's status
+Singleton: nog niet geïmplementeerd, gaat gebruikt worden om de gameOver() aan te spreken
+Strategy: als Jibby peformBehavior aanroept wordt altijd het huidige gedrag uitgevoerd
+Composition: Game heeft een Jibby, Jibby heeft een behavior
+
