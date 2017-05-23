@@ -15,9 +15,9 @@ https://unicorninreverse.github.io/Jibby/JibbyUML.png
 
 ## Programmeer principes
 
-Interface: behavior van Jibby
-Static Utility Method: nog niet geïmplementeerd, gaat een class worden die berekeningen doet van Jibby's status
-Singleton: nog niet geïmplementeerd, gaat gebruikt worden om de gameOver() aan te spreken
-Strategy: als Jibby peformBehavior aanroept wordt altijd het huidige gedrag uitgevoerd
-Composition: Game heeft een Jibby, Jibby heeft een behavior
+- Interface: behavior van Jibby
+- Static Utility Method: nog niet geïmplementeerd, gaat een class worden die berekeningen doet van Jibby's status
+- Singleton: nog niet geïmplementeerd, gaat gebruikt worden om de gameOver() aan te spreken
+- Strategy: als Jibby peformBehavior aanroept wordt altijd het huidige gedrag uitgevoerd
+- Composition: Game heeft een Jibby, Jibby heeft een behavior
 
