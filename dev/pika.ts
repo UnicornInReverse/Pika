@@ -53,6 +53,8 @@ class Pika {
 
         if(this.food < 30) {
             this.div.style.backgroundImage = "url('images/hungry.png')"
+            let g = Game.getInstance();
+            g.gameOver();
         }
 
         if(this.happiness < 10) {

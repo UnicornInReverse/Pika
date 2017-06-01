@@ -4,12 +4,20 @@ class Game {
 
     private pika : Pika;
     private controls: Controls;
+    private static instance: Game;
 
-    constructor() {
+    private constructor() {
         let container = document.getElementById("container");
         this.pika = new Pika(container);
         this.controls = new Controls();
         requestAnimationFrame(() => this.gameLoop());
+    }
+
+    public static getInstance():Game {
+        if(!Game.instance) {
+            Game.instance = new Game();
+        }
+        return Game.instance;
     }
 
     private gameLoop(){
@@ -23,10 +31,14 @@ class Game {
         document.getElementsByTagName("sleep")[0].innerHTML = Math.round(this.pika.hygiene).toString() + "Zzz";
         document.getElementsByTagName("happiness")[0].innerHTML = Math.round(this.pika.happiness).toString() + ":)";
     }
+
+    public gameOver():void {
+        console.log("Game over");
+    }
 } 
 
 
 // load
 window.addEventListener("load", function() {
-    let g:Game = new Game();
+    let g:Game = Game.getInstance();
 });

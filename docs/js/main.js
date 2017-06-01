@@ -109,6 +109,8 @@ var Pika = (function () {
         }
         if (this.food < 30) {
             this.div.style.backgroundImage = "url('images/hungry.png')";
+            var g = Game.getInstance();
+            g.gameOver();
         }
         if (this.happiness < 10) {
             this.div.style.backgroundImage = "url('images/sad.png')";
@@ -142,6 +144,12 @@ var Game = (function () {
         this.controls = new Controls();
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
+    Game.getInstance = function () {
+        if (!Game.instance) {
+            Game.instance = new Game();
+        }
+        return Game.instance;
+    };
     Game.prototype.gameLoop = function () {
         var _this = this;
         this.pika.update();
@@ -153,10 +161,13 @@ var Game = (function () {
         document.getElementsByTagName("sleep")[0].innerHTML = Math.round(this.pika.hygiene).toString() + "Zzz";
         document.getElementsByTagName("happiness")[0].innerHTML = Math.round(this.pika.happiness).toString() + ":)";
     };
+    Game.prototype.gameOver = function () {
+        console.log("Game over");
+    };
     return Game;
 }());
 window.addEventListener("load", function () {
-    var g = new Game();
+    var g = Game.getInstance();
 });
 var Idle = (function () {
     function Idle(j) {
