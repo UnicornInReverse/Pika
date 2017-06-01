@@ -1,25 +1,27 @@
-/// <reference path="jibby.ts"/>
+/// <reference path="pika.ts"/>
 
 class Game {
 
-    private jibby : Jibby;
+    private pika : Pika;
+    private controls: Controls;
 
     constructor() {
         let container = document.getElementById("container");
-        this.jibby = new Jibby(container);
+        this.pika = new Pika(container);
+        this.controls = new Controls();
         requestAnimationFrame(() => this.gameLoop());
     }
 
     private gameLoop(){
-        this.jibby.update();
+        this.pika.update();
         this.updateUI();
         requestAnimationFrame(() => this.gameLoop());
     }
 
     private updateUI():void{
-        document.getElementsByTagName("food")[0].innerHTML = Math.round(this.jibby.food).toString();
-        document.getElementsByTagName("happyness")[0].innerHTML = Math.round(this.jibby.happiness).toString();
-        document.getElementsByTagName("hygiene")[0].innerHTML = Math.round(this.jibby.hygiene).toString();
+        document.getElementsByTagName("xp")[0].innerHTML = Math.round(this.pika.food).toString() + "xp";
+        document.getElementsByTagName("sleep")[0].innerHTML = Math.round(this.pika.hygiene).toString() + "Zzz";
+        document.getElementsByTagName("happiness")[0].innerHTML = Math.round(this.pika.happiness).toString() + ":)";
     }
 } 
 

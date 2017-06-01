@@ -1,5 +1,5 @@
 interface Behavior {
-    jibby:Jibby;
+    pika:Pika;
     performBehavior() : void;
 
     onWash() : void;

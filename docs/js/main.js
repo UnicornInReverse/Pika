@@ -1,10 +1,62 @@
+var Controls = (function () {
+    function Controls() {
+        var _this = this;
+        this.upButton = document.getElementsByTagName("up-button")[0];
+        this.downButton = document.getElementsByTagName("down-button")[0];
+        this.leftButton = document.getElementsByTagName("left-button")[0];
+        this.rightButton = document.getElementsByTagName("right-button")[0];
+        this.aButton = document.getElementsByTagName("a-button")[0];
+        this.bButton = document.getElementsByTagName("b-button")[0];
+        window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
+        window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
+    }
+    Controls.prototype.onKeyDown = function (event) {
+        switch (event.keyCode) {
+            case 87:
+                console.log("up");
+                this.upButton.classList.add("active");
+                break;
+            case 83:
+                console.log("down");
+                this.downButton.classList.add("active");
+                break;
+            case 65:
+                console.log("left");
+                this.leftButton.classList.add("active");
+                break;
+            case 68:
+                console.log("right");
+                this.rightButton.classList.add("active");
+                break;
+            case 74:
+                console.log("b");
+                this.aButton.classList.add("active");
+                break;
+            case 75:
+                this.bButton.classList.add("active");
+                console.log("a");
+                break;
+            default:
+                break;
+        }
+    };
+    Controls.prototype.onKeyUp = function (e) {
+        var buttons = document.getElementsByClassName("button");
+        var i = 0;
+        while (i < 7) {
+            buttons[i].classList.remove("active");
+            i++;
+        }
+    };
+    return Controls;
+}());
 var Dead = (function () {
-    function Dead(j) {
-        this.jibby = j;
+    function Dead(p) {
+        this.pika = p;
         this.performBehavior();
     }
     Dead.prototype.performBehavior = function () {
-        this.jibby.div.style.backgroundImage = "url('images/dead.png')";
+        this.pika.div.style.backgroundImage = "url('images/dead.png')";
     };
     Dead.prototype.onWash = function () {
     };
@@ -15,11 +67,11 @@ var Dead = (function () {
     return Dead;
 }());
 var Eat = (function () {
-    function Eat(j) {
-        this.jibby = j;
+    function Eat(p) {
+        this.pika = p;
     }
     Eat.prototype.performBehavior = function () {
-        this.jibby.div.style.backgroundImage = "url('images/dead.png')";
+        this.pika.div.style.backgroundImage = "url('images/dead.png')";
     };
     Eat.prototype.onWash = function () {
     };
@@ -29,21 +81,18 @@ var Eat = (function () {
     };
     return Eat;
 }());
-var Jibby = (function () {
-    function Jibby(parent) {
+var Pika = (function () {
+    function Pika(parent) {
         var _this = this;
-        this.div = document.createElement("jibby");
+        this.div = document.createElement("pika");
         parent.appendChild(this.div);
         this.x = 0;
         this.y = 220;
         this.hygiene = this.food = this.happiness = 50;
         this.div.addEventListener("click", function () { return _this.onPet(); });
-        document.getElementsByTagName("foodbutton")[0].addEventListener("click", function () { return _this.onEat(); });
-        document.getElementsByTagName("washbutton")[0].addEventListener("click", function () { return _this.onWash(); });
         this.behavior = new Idle(this);
-        this.div.style.backgroundImage = "url('images/idle.png')";
     }
-    Object.defineProperty(Jibby.prototype, "behavior", {
+    Object.defineProperty(Pika.prototype, "behavior", {
         get: function () {
             return this._behavior;
         },
@@ -53,11 +102,8 @@ var Jibby = (function () {
         enumerable: true,
         configurable: true
     });
-    Jibby.prototype.update = function () {
+    Pika.prototype.update = function () {
         this.behavior.performBehavior();
-        this.hygiene -= 0.01;
-        this.food -= 0.02;
-        this.happiness -= 0.015;
         if (this.hygiene < 20) {
             this.div.style.backgroundImage = "url('images/dirty.png')";
         }
@@ -74,37 +120,38 @@ var Jibby = (function () {
             this.behavior = new Dead(this);
         }
     };
-    Jibby.prototype.onPet = function () {
-        console.log("you clicked on jibby!");
+    Pika.prototype.onPet = function () {
+        console.log("you clicked on pika!");
         this.div.style.backgroundImage = "url('images/happy.png')";
     };
-    Jibby.prototype.onWash = function () {
-        console.log("washing jibby!");
+    Pika.prototype.onWash = function () {
+        console.log("washing pika!");
         this.behavior.onWash();
     };
-    Jibby.prototype.onEat = function () {
-        console.log("jibby is eating!");
+    Pika.prototype.onEat = function () {
+        console.log("pika is eating!");
         this.behavior.onEat;
     };
-    return Jibby;
+    return Pika;
 }());
 var Game = (function () {
     function Game() {
         var _this = this;
         var container = document.getElementById("container");
-        this.jibby = new Jibby(container);
+        this.pika = new Pika(container);
+        this.controls = new Controls();
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
     Game.prototype.gameLoop = function () {
         var _this = this;
-        this.jibby.update();
+        this.pika.update();
         this.updateUI();
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
     Game.prototype.updateUI = function () {
-        document.getElementsByTagName("food")[0].innerHTML = Math.round(this.jibby.food).toString();
-        document.getElementsByTagName("happyness")[0].innerHTML = Math.round(this.jibby.happiness).toString();
-        document.getElementsByTagName("hygiene")[0].innerHTML = Math.round(this.jibby.hygiene).toString();
+        document.getElementsByTagName("xp")[0].innerHTML = Math.round(this.pika.food).toString() + "xp";
+        document.getElementsByTagName("sleep")[0].innerHTML = Math.round(this.pika.hygiene).toString() + "Zzz";
+        document.getElementsByTagName("happiness")[0].innerHTML = Math.round(this.pika.happiness).toString() + ":)";
     };
     return Game;
 }());
@@ -113,12 +160,13 @@ window.addEventListener("load", function () {
 });
 var Idle = (function () {
     function Idle(j) {
-        this.jibby = j;
+        this.pika = j;
     }
     Idle.prototype.performBehavior = function () {
+        this.pika.div.style.backgroundImage = "url('images/Pichu/idle.gif')";
     };
     Idle.prototype.onWash = function () {
-        this.jibby.behavior = new Wash(this.jibby);
+        this.pika.behavior = new Wash(this.pika);
     };
     Idle.prototype.onPet = function () {
     };
@@ -127,11 +175,11 @@ var Idle = (function () {
     return Idle;
 }());
 var Pet = (function () {
-    function Pet(j) {
-        this.jibby = j;
+    function Pet(p) {
+        this.pika = p;
     }
     Pet.prototype.performBehavior = function () {
-        this.jibby.div.style.backgroundImage = "url('images/dead.png')";
+        this.pika.div.style.backgroundImage = "url('images/dead.png')";
     };
     Pet.prototype.onWash = function () {
     };
@@ -142,18 +190,18 @@ var Pet = (function () {
     return Pet;
 }());
 var Wash = (function () {
-    function Wash(j) {
-        this.jibby = j;
+    function Wash(p) {
+        this.pika = p;
     }
     Wash.prototype.performBehavior = function () {
-        this.jibby.div.style.backgroundImage = "url('images/washing.png')";
+        this.pika.div.style.backgroundImage = "url('images/washing.png')";
     };
     Wash.prototype.onWash = function () {
     };
     Wash.prototype.onPet = function () {
     };
     Wash.prototype.onEat = function () {
-        this.jibby.div.style.backgroundImage = "url('images/angry.png')";
+        this.pika.div.style.backgroundImage = "url('images/angry.png')";
     };
     return Wash;
 }());

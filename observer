@@ -1,0 +1,57 @@
+interface Subject {
+  observers:Array<Observer>;
+  subscribe(o:Observer):void;
+  unsubscribe(o:Observer):void;
+}
+
+interface Observer {
+  notify():void;
+}
+
+class Skeletor implements Subject{
+  observers:Array<Observer> = new Array();
+  
+  constructor(){
+    let bubble = document.querySelector("#skeletor .bubble");
+    bubble.innerHTML = "Just going for a coffee...";
+    setInterval(() => this.action(), 3000)
+    
+  }
+  
+  subscribe(o:Observer):void {
+      this.observers.push(o);
+    }
+  unsubscribe(o:Observer):void {
+    
+  }
+    action() {
+      for(let o of this.observers) {
+        o.notify();
+      }
+    }
+}
+
+class Heman implements Observer{
+  constructor(s: Subject){
+    s.subscribe(this);
+  }
+  notify() {
+    let bubble = document.querySelector("#heman .bubble");
+    bubble.innerHTML = "I don't think so...";
+  }
+}
+
+class Manatarms implements Observer{
+  constructor(s: Subject){
+    s.subscribe(this);
+  }
+  notify() {
+    let bubble = document.querySelector("#manatarms .bubble");
+    bubble.innerHTML = "Kill him!";
+  }
+}
+
+let s = new Skeletor();
+let h = new Heman(s);
+let m = new Manatarms(s);
+

@@ -1,4 +1,4 @@
-class Jibby {
+class Pika {
 
     public hygiene:number;
     public food:number;
@@ -19,7 +19,7 @@ class Jibby {
     }
           
     constructor(parent:HTMLElement) {
-        this.div = document.createElement("jibby");
+        this.div = document.createElement("pika");
         parent.appendChild(this.div);
 
         // start instellingen
@@ -29,24 +29,23 @@ class Jibby {
 
         // click listeners
         this.div.addEventListener("click", () => this.onPet());
-        document.getElementsByTagName("foodbutton")[0].addEventListener("click", () => this.onEat());
-        document.getElementsByTagName("washbutton")[0].addEventListener("click", () => this.onWash());
+        // document.getElementsByTagName("b-button")[0].addEventListener("click", () => this.onEat());
+        // document.getElementsByTagName("a-button")[0].addEventListener("click", () => this.onWash());
 
         // hier het gedrag toekennen
         // this.behavior = ...
         this.behavior = new Idle(this);
         
         // afbeelding voor idle - verplaatsen naar idle gedrag
-        this.div.style.backgroundImage = "url('images/idle.png')";
     }
 
     public update():void {
         // hier het gedrag updaten
         this.behavior.performBehavior();      
 
-        this.hygiene -= 0.01;
-        this.food -= 0.02;
-        this.happiness -= 0.015;     
+        // this.hygiene -= 0.01;
+        // this.food -= 0.02;
+        // this.happiness -= 0.015;     
 
         if(this.hygiene < 20) {
             this.div.style.backgroundImage = "url('images/dirty.png')"
@@ -69,19 +68,19 @@ class Jibby {
     }
 
     private onPet():void {
-        console.log("you clicked on jibby!");
+        console.log("you clicked on pika!");
         this.div.style.backgroundImage = "url('images/happy.png')"
         // hier moet je de onPet functie van het gedrag aanroepen
     }
 
     private onWash():void {
-        console.log("washing jibby!");        
+        console.log("washing pika!");        
         // hier moet je de onWash functie van het gedrag aanroepen
         this.behavior.onWash();
     }
 
     private onEat():void {
-        console.log("jibby is eating!");
+        console.log("pika is eating!");
         // hier moet je de onEat functie van het gedrag aanroepen
         this.behavior.onEat;
     }

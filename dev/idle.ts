@@ -1,18 +1,20 @@
 class Idle implements Behavior {
-    jibby: Jibby;
+    public pika: Pika;
     
-    constructor(j: Jibby) {
-        this.jibby = j;
+    constructor(j: Pika) {
+        this.pika = j;
     }
 
     performBehavior(): void {
-        // this.jibby.hygiene -= 0.01;
-        // this.jibby.food -= 0.02;
-        // this.jibby.happiness -= 0.015;
+        // this.pika.hygiene -= 0.01;
+        // this.pika.food -= 0.02;
+        // this.pika.happiness -= 0.015;
+        this.pika.div.style.backgroundImage = "url('images/Pichu/idle.gif')";
+
     }
 
     onWash(): void {
-        this.jibby.behavior = new Wash(this.jibby);
+        this.pika.behavior = new Wash(this.pika);
     }
 
     onPet(): void {

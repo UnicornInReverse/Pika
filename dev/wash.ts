@@ -1,12 +1,12 @@
 class Wash implements Behavior {
-    jibby: Jibby;
+    pika: Pika;
     
-    constructor(j: Jibby) {
-        this.jibby = j;
+    constructor(p: Pika) {
+        this.pika = p;
     }s
 
     performBehavior(): void {
-        this.jibby.div.style.backgroundImage = "url('images/washing.png')"
+        this.pika.div.style.backgroundImage = "url('images/washing.png')"
     }
 
     onWash(): void {
@@ -18,7 +18,7 @@ class Wash implements Behavior {
     }
 
     onEat(): void {
-        this.jibby.div.style.backgroundImage = "url('images/angry.png')"        
+        this.pika.div.style.backgroundImage = "url('images/angry.png')"        
     }
     
 }
