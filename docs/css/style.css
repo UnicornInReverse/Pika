@@ -44,17 +44,13 @@ happiness {
 
 pika {
     width:192px; height:192px;
-    transform: translate(282px, 155px);
+    transform: translate(282px, 142px);
     opacity:0.7;
     cursor:url(../images/hand_open.png), auto;
 }
 
 pika:active {
     cursor:url(../images/hand_closed.png), auto;
-}
-
-.idle {
-    background-image: url(../images/idle.png);
 }
 
 b-button {
@@ -93,6 +89,15 @@ right-button {
     transform: translate(75px, 129px);
     width:30px; height:30px;
     cursor:url(../images/hand.png), auto;
+}
+
+countdown {
+    display: none;
+    background:url(../images/countdown.gif);
+    background-size: contain;
+    width: 50px;
+    height: 50px;
+    transform: translate(380px, 115px);   
 }
 
 .active {

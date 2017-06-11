@@ -1,4 +1,5 @@
 /// <reference path="pika.ts"/>
+/// <reference path="controls.ts"/>
 
 class Game {
 
@@ -8,8 +9,8 @@ class Game {
 
     private constructor() {
         let container = document.getElementById("container");
-        this.pika = new Pika(container);
         this.controls = new Controls();
+        this.pika = new Pika(container, this.controls);        
         requestAnimationFrame(() => this.gameLoop());
     }
 
@@ -27,16 +28,19 @@ class Game {
     }
 
     private updateUI():void{
-        document.getElementsByTagName("xp")[0].innerHTML = Math.round(this.pika.food).toString() + "xp";
-        document.getElementsByTagName("sleep")[0].innerHTML = Math.round(this.pika.hygiene).toString() + "Zzz";
+        document.getElementsByTagName("xp")[0].innerHTML = Math.round(this.pika.xp).toString() + "xp";
+        document.getElementsByTagName("sleep")[0].innerHTML = Math.round(this.pika.sleep).toString() + "Zzz";
         document.getElementsByTagName("happiness")[0].innerHTML = Math.round(this.pika.happiness).toString() + ":)";
     }
 
-    public gameOver():void {
+    public gameOver(w: boolean):void {
+        if(w == true) {
+            console.log('You win!')
+        } else {
         console.log("Game over");
+        }
     }
 } 
-
 
 // load
 window.addEventListener("load", function() {

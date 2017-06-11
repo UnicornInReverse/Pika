@@ -1,8 +1,9 @@
 interface Behavior {
     pika:Pika;
+    controls: Controls;
     performBehavior() : void;
 
-    onWash() : void;
     onPet() : void;
-    onEat() : void;
+    onSleeping() : void;
+    onTraining(b: Number) : void;
 }

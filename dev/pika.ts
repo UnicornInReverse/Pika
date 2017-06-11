@@ -1,12 +1,15 @@
 class Pika {
 
-    public hygiene:number;
-    public food:number;
+    public xp:number;
+    public sleep:number;
     public happiness:number;
 
     public div:HTMLElement;
     public x:number;
     public y:number;
+
+    public state: String;
+    public speed: number;
 
     private _behavior:Behavior;
 
@@ -18,74 +21,49 @@ class Pika {
         this._behavior = b;
     }
           
-    constructor(parent:HTMLElement) {
+    constructor(parent:HTMLElement, c:Controls) {
         this.div = document.createElement("pika");
+        this.state = "Pichu";
         parent.appendChild(this.div);
 
         // start instellingen
         this.x = 0;
         this.y = 220;
-        this.hygiene = this.food = this.happiness = 50;
+        this.xp = 5;
+        this.sleep = 0;
+        this.happiness = 30;
 
-        // click listeners
-        this.div.addEventListener("click", () => this.onPet());
-        // document.getElementsByTagName("b-button")[0].addEventListener("click", () => this.onEat());
-        // document.getElementsByTagName("a-button")[0].addEventListener("click", () => this.onWash());
-
-        // hier het gedrag toekennen
-        // this.behavior = ...
-        this.behavior = new Idle(this);
-        
-        // afbeelding voor idle - verplaatsen naar idle gedrag
+        this.behavior = new Idle(this, c);
     }
 
     public update():void {
-        // hier het gedrag updaten
-        this.behavior.performBehavior();      
-
-        // this.hygiene -= 0.01;
-        // this.food -= 0.02;
-        // this.happiness -= 0.015;     
-
-        if(this.hygiene < 20) {
-            this.div.style.backgroundImage = "url('images/dirty.png')"
-        }
-
-        if(this.food < 30) {
-            this.div.style.backgroundImage = "url('images/hungry.png')"
-            let g = Game.getInstance();
-            g.gameOver();
+        if(this.sleep < 0) {
+            this.sleep = 0;
         }
 
         if(this.happiness < 10) {
-            this.div.style.backgroundImage = "url('images/sad.png')"
+            this.behavior = new Fled(this);
+        }   
+
+        if(this.xp > 1 && this.xp < 19) {
+            this.state = "Pichu";
+            this.speed = 2500;
+        } else if (this.xp > 100) {
+            Game.getInstance().gameOver(true);
+        } else if (this.xp > 19 && this.xp < 39) {
+            this.state = "Pikachu"
+            this.speed = 800
+        } else if(this.xp > 49) {
+            this.state = "Raichu"
+            this.speed = 600;
+        } else if (this.xp < 1) {
+            this.behavior = new Fled(this)
         }
 
-        if(this.hygiene < 0 || this.food < 0 || this.happiness < 0) {
-            this.happiness = 0;
-            this.food = 0;
-            this.hygiene = 0;
-            this.behavior = new Dead(this);
-        }  
+        if(this.happiness > 100) {
+            this.happiness = 100;
+        }
+
+        this.behavior.performBehavior();        
     }
-
-    private onPet():void {
-        console.log("you clicked on pika!");
-        this.div.style.backgroundImage = "url('images/happy.png')"
-        // hier moet je de onPet functie van het gedrag aanroepen
-    }
-
-    private onWash():void {
-        console.log("washing pika!");        
-        // hier moet je de onWash functie van het gedrag aanroepen
-        this.behavior.onWash();
-    }
-
-    private onEat():void {
-        console.log("pika is eating!");
-        // hier moet je de onEat functie van het gedrag aanroepen
-        this.behavior.onEat;
-    }
-
-
 }
