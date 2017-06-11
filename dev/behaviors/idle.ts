@@ -13,7 +13,7 @@ class Idle implements Behavior, Observer {
     }
 
     performBehavior(): void {
-        if (this.first == true) {
+        if (this.first) {
             this.pika.div.style.backgroundImage = "url('images/" + this.pika.state + "/idle.gif')";
             var sound = new Howl({
                 src: ['sounds/'+ this.pika.state +'.wav'],
@@ -21,6 +21,7 @@ class Idle implements Behavior, Observer {
             });
             sound.play();
             this.first = false;
+            console.log(sound)
         }
         this.pika.sleep += 0.002;
     }
