@@ -83,24 +83,6 @@ var Idle = (function () {
     };
     return Idle;
 }());
-var Pet = (function () {
-    function Pet(p) {
-        this.pika = p;
-    }
-    Pet.prototype.notify = function () {
-        console.log(":D");
-    };
-    Pet.prototype.performBehavior = function () {
-        this.pika.div.style.backgroundImage = "url('images/dead.png')";
-    };
-    Pet.prototype.onPet = function () {
-    };
-    Pet.prototype.onSleeping = function () {
-    };
-    Pet.prototype.onTraining = function () {
-    };
-    return Pet;
-}());
 var Sleeping = (function () {
     function Sleeping(p, c) {
         this.pika = p;
@@ -356,7 +338,6 @@ var SoundBuilder = (function () {
         sound.on('end', function () {
             sound.stop();
         });
-        console.log(sound);
     };
     return SoundBuilder;
 }());

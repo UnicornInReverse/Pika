@@ -15,7 +15,6 @@ class SoundBuilder {
 
         sound.on('end', function() {
             sound.stop();
-        })
-        console.log(sound)
+        });
     }
 }
