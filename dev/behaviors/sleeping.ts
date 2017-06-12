@@ -15,7 +15,7 @@ class Sleeping implements Behavior, Observer {
     }
 
     performBehavior(): void {
-        this.pika.div.style.backgroundImage = "url('images/" + this.pika.state + "/sleeping.gif')"
+        this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/sleeping.gif')"
         this.pika.sleep -= 0.02;
     }
 

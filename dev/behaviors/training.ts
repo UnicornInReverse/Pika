@@ -43,7 +43,7 @@ class Training implements Behavior, Observer {
         var count = 0;
 
         this.pika.div.style.transform = "translate(200px, 40px)";
-        this.pika.div.style.backgroundImage = "url('images/" + this.pika.state + "/attack-1.gif')";
+        this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/attack-1.gif')";
 
         this.controls.subscribe(this);
         this.createRandomButton();                  
@@ -69,25 +69,11 @@ class Training implements Behavior, Observer {
         if(this.training_key == this.userButton) {
             this.score++;
             console.log('yea')
-            let right = new Howl({
-                src: ['sounds/right.wav']
-            })
-            right.play();
-
-            right.on('end', function() {
-                right.stop();
-            })
+            SoundBuilder.getSoundOnce('right');
         } else {
             this.score--;
             console.log('noh')
-            let wrong = new Howl({
-                src: ['sounds/wrong.wav']
-            })
-            wrong.play();
-
-            wrong.on('end', function() {
-                wrong.stop();
-            })
+            SoundBuilder.getSoundOnce('wrong');
         }  
 
         if(count > 9) {

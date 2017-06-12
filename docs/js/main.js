@@ -1,6 +1,13 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var Fled = (function () {
-    function Fled(p) {
+    function Fled(p, c) {
         this.pika = p;
+        this.controls = c;
+        this.controls.subscribe(this);
         Game.getInstance().gameOver(false);
         this.performBehavior();
     }
@@ -8,7 +15,6 @@ var Fled = (function () {
         console.log("Fuck this shit I'm out");
     };
     Fled.prototype.performBehavior = function () {
-        this.pika.div.style.backgroundImage = "none";
     };
     Fled.prototype.onPet = function () {
     };
@@ -24,22 +30,24 @@ var Idle = (function () {
         this.first = true;
         c.subscribe(this);
         this.pika = p;
-        console.log(this.pika.state);
         this.controls = c;
         this.pika.div.addEventListener("click", function () { return _this.onPet(); });
     }
     Idle.prototype.performBehavior = function () {
         if (this.first) {
-            this.pika.div.style.backgroundImage = "url('images/" + this.pika.state + "/idle.gif')";
-            var sound = new Howl({
-                src: ['sounds/' + this.pika.state + '.wav'],
-                volume: 0.2
-            });
-            sound.play();
+            this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/idle.gif')";
+            var sound = SoundBuilder.getSound(this.pika.cur_state);
             this.first = false;
-            console.log(sound);
         }
         this.pika.sleep += 0.002;
+        if (this.pika.xp < 1 || this.pika.happiness < 25) {
+            this.pika.behavior = new Fled(this.pika, this.controls);
+            this.controls.unsubscribe(this);
+        }
+        else if (this.pika.xp > 99) {
+            this.controls.unsubscribe(this);
+            Game.getInstance().gameOver(true);
+        }
     };
     Idle.prototype.notify = function (b) {
         switch (b) {
@@ -68,7 +76,7 @@ var Idle = (function () {
     };
     Idle.prototype.onTraining = function () {
         if (this.pika.sleep > 69) {
-            this.pika.happiness -= 20;
+            this.pika.happiness -= 10;
         }
         this.pika.behavior = new Training(this.pika, this.controls);
         this.controls.unsubscribe(this);
@@ -105,7 +113,7 @@ var Sleeping = (function () {
         }
     };
     Sleeping.prototype.performBehavior = function () {
-        this.pika.div.style.backgroundImage = "url('images/" + this.pika.state + "/sleeping.gif')";
+        this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/sleeping.gif')";
         this.pika.sleep -= 0.02;
     };
     Sleeping.prototype.onPet = function () {
@@ -147,7 +155,7 @@ var Training = (function () {
         this.score = 0;
         var count = 0;
         this.pika.div.style.transform = "translate(200px, 40px)";
-        this.pika.div.style.backgroundImage = "url('images/" + this.pika.state + "/attack-1.gif')";
+        this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/attack-1.gif')";
         this.controls.subscribe(this);
         this.createRandomButton();
         var trainInterval = setInterval(function () {
@@ -165,24 +173,12 @@ var Training = (function () {
         if (this.training_key == this.userButton) {
             this.score++;
             console.log('yea');
-            var right_1 = new Howl({
-                src: ['sounds/right.wav']
-            });
-            right_1.play();
-            right_1.on('end', function () {
-                right_1.stop();
-            });
+            SoundBuilder.getSoundOnce('right');
         }
         else {
             this.score--;
             console.log('noh');
-            var wrong_1 = new Howl({
-                src: ['sounds/wrong.wav']
-            });
-            wrong_1.play();
-            wrong_1.on('end', function () {
-                wrong_1.stop();
-            });
+            SoundBuilder.getSoundOnce('wrong');
         }
         if (count > 9) {
             clearInterval(trainInterval);
@@ -242,19 +238,10 @@ var Controls = (function () {
     };
     return Controls;
 }());
-var Pika = (function () {
-    function Pika(parent, c) {
-        this.div = document.createElement("pika");
-        this.state = "Pichu";
-        parent.appendChild(this.div);
-        this.x = 0;
-        this.y = 220;
-        this.xp = 5;
-        this.sleep = 0;
-        this.happiness = 30;
-        this.behavior = new Idle(this, c);
+var Pokepet = (function () {
+    function Pokepet() {
     }
-    Object.defineProperty(Pika.prototype, "behavior", {
+    Object.defineProperty(Pokepet.prototype, "behavior", {
         get: function () {
             return this._behavior;
         },
@@ -264,38 +251,48 @@ var Pika = (function () {
         enumerable: true,
         configurable: true
     });
-    Pika.prototype.update = function () {
+    Pokepet.prototype.update = function () {
         if (this.sleep < 0) {
             this.sleep = 0;
         }
-        if (this.happiness < 10) {
-            this.behavior = new Fled(this);
-        }
         if (this.xp > 1 && this.xp < 19) {
-            this.state = "Pichu";
+            this.cur_state = this.states[0];
             this.speed = 2500;
         }
-        else if (this.xp > 100) {
-            Game.getInstance().gameOver(true);
-        }
         else if (this.xp > 19 && this.xp < 39) {
-            this.state = "Pikachu";
+            this.cur_state = this.states[1];
             this.speed = 800;
         }
         else if (this.xp > 49) {
-            this.state = "Raichu";
+            this.cur_state = this.states[2];
             this.speed = 600;
-        }
-        else if (this.xp < 1) {
-            this.behavior = new Fled(this);
-        }
-        if (this.happiness > 100) {
-            this.happiness = 100;
+            if (this.happiness > 100) {
+                this.happiness = 100;
+            }
+            if (this.happiness < 0) {
+                this.happiness = 0;
+            }
         }
         this.behavior.performBehavior();
     };
-    return Pika;
+    return Pokepet;
 }());
+var Pika = (function (_super) {
+    __extends(Pika, _super);
+    function Pika(parent, c) {
+        _super.call(this);
+        this.div = document.createElement("pika");
+        this.states = new Array("Pichu", "Pikachu", "Raichu");
+        parent.appendChild(this.div);
+        this.x = 0;
+        this.y = 220;
+        this.xp = 5;
+        this.sleep = 0;
+        this.happiness = 30;
+        this.behavior = new Idle(this, c);
+    }
+    return Pika;
+}(Pokepet));
 var Game = (function () {
     function Game() {
         var _this = this;
@@ -322,16 +319,45 @@ var Game = (function () {
         document.getElementsByTagName("happiness")[0].innerHTML = Math.round(this.pika.happiness).toString() + ":)";
     };
     Game.prototype.gameOver = function (w) {
-        if (w == true) {
-            console.log('You win!');
+        if (w) {
+            this.pika.div.style.transform = "translate(219px, 118px)";
+            this.pika.div.style.backgroundImage = "url('images/you-won.png')";
         }
         else {
-            console.log("Game over");
+            this.pika.div.style.transform = "translate(215px, 140px)";
+            this.pika.div.style.backgroundImage = "url('images/game-over.gif')";
         }
+        window.addEventListener("keydown", function (e) {
+            if (e.keyCode == 75) {
+                location.reload();
+            }
+        });
     };
     return Game;
 }());
 window.addEventListener("load", function () {
     var g = Game.getInstance();
 });
+var SoundBuilder = (function () {
+    function SoundBuilder() {
+    }
+    SoundBuilder.getSound = function (name) {
+        var sound = new Howl({
+            src: ['sounds/' + name + '.wav'],
+            volume: 0.2
+        });
+        sound.play();
+    };
+    SoundBuilder.getSoundOnce = function (name) {
+        var sound = new Howl({
+            src: ['sounds/' + name + '.wav']
+        });
+        sound.play();
+        sound.on('end', function () {
+            sound.stop();
+        });
+        console.log(sound);
+    };
+    return SoundBuilder;
+}());
 //# sourceMappingURL=main.js.map

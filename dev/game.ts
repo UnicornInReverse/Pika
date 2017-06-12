@@ -34,11 +34,19 @@ class Game {
     }
 
     public gameOver(w: boolean):void {
-        if(w == true) {
-            console.log('You win!')
+        if(w) {
+            this.pika.div.style.transform = "translate(219px, 118px)"
+            this.pika.div.style.backgroundImage = "url('images/you-won.png')";
         } else {
-        console.log("Game over");
+            this.pika.div.style.transform = "translate(215px, 140px)";        
+            this.pika.div.style.backgroundImage = "url('images/game-over.gif')";
         }
+
+        window.addEventListener("keydown", function(e:KeyboardEvent){
+            if(e.keyCode == 75) {
+                location.reload();
+            }
+        })
     }
 } 
 

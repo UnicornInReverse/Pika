@@ -6,7 +6,6 @@ class Idle implements Behavior, Observer {
     constructor(p: Pika, c:Controls) {
         c.subscribe(this);
         this.pika = p; 
-        console.log(this.pika.state)
         
         this.controls = c;       
         this.pika.div.addEventListener("click", () => this.onPet());
@@ -14,16 +13,20 @@ class Idle implements Behavior, Observer {
 
     performBehavior(): void {
         if (this.first) {
-            this.pika.div.style.backgroundImage = "url('images/" + this.pika.state + "/idle.gif')";
-            var sound = new Howl({
-                src: ['sounds/'+ this.pika.state +'.wav'],
-                volume: 0.2
-            });
-            sound.play();
+            this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/idle.gif')";
+            
+            let sound = SoundBuilder.getSound(this.pika.cur_state);
             this.first = false;
-            console.log(sound)
         }
         this.pika.sleep += 0.002;
+
+        if(this.pika.xp < 1 || this.pika.happiness < 25) {
+            this.pika.behavior = new Fled(this.pika, this.controls);
+            this.controls.unsubscribe(this);
+        } else if (this.pika.xp > 99) {
+            this.controls.unsubscribe(this);            
+            Game.getInstance().gameOver(true);
+        }
     }
 
     notify(b: Number): void {
@@ -54,7 +57,7 @@ class Idle implements Behavior, Observer {
     }
     onTraining() : void {
         if(this.pika.sleep > 69) {
-            this.pika.happiness -= 20;
+            this.pika.happiness -= 10;
         }
         this.pika.behavior = new Training(this.pika, this.controls);
         this.controls.unsubscribe(this);

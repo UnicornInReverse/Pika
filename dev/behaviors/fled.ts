@@ -2,10 +2,11 @@ class Fled implements Behavior, Observer {
     pika: Pika;
     controls: Controls;
 
-    constructor(p: Pika) {
+    constructor(p: Pika, c: Controls) {
         this.pika = p;
+        this.controls = c;
+        this.controls.subscribe(this);
         Game.getInstance().gameOver(false);
-        // Controls.subscribe(this);
         this.performBehavior();
     }
 
@@ -14,7 +15,6 @@ class Fled implements Behavior, Observer {
     }
 
     performBehavior(): void {
-        this.pika.div.style.backgroundImage = "none";
     }
 
     onPet() : void {
