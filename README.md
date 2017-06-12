@@ -1,23 +1,38 @@
 ## Pika
 
-Pika is een [tamagotchi](https://en.wikipedia.org/wiki/Tamagotchi) die je in leven zal moeten houden. Dit doe je door hem aandacht te geven, eten te geven en schoon te houden. Wanneer je je aandacht laat wegzakken en pika niet goed onderhoudt zal pika doodongelukkig worden en uiteindelijk dood gaan door een gebrek aan eten, aandacht of hygiene. Wat kan je doen om dit te voorkomen?
+Pichu is een kleine pokémon die jij moet gaan trainen om een Raichu te worden. 
 
-- Douchen. Hiervan wordt pika schoon en blij. 
-- Eten. Hiervan wordt pika blij en minder hongerig.
-- Aaien. Door met de muis op pika te klikken geef je hem aandacht en wordt hij blij. 
-- Slapen. Als er een tijdje niks gebeurt valt pika in slaap. Daarvan wordt hij blij, maar als hij wakker is heeft hij wel honger.
+- Trainen: Hiermee krijgt pichu meer XP zodat hij kan evolven. Van het trainen wordt hij wel moe. 
+- Aaien: Door met de muis op pichu te klikken geef je hem aandacht en wordt hij blij, anders rent hij bij je weg. 
+- Slapen: Van al het trainen wordt Pichu moe. Na even slapen wilt hij weer trainen. Als je toch traint als pichu moe is wordt hij daar niet blij van. 
 
 ## UML
 
 UML geeft de game weer zoals hij nu is. Hij is zo opgesteld dat er gemakkelijk nieuw behavior toegevoegd kan worden. 
 
-https://unicorninreverse.github.io/pika/pikaUML.png
+https://unicorninreverse.github.io/pika/PikaUML.png
 
 ## Programmeer principes
 
-- Interface: behavior van pika
-- Static Utility Method: nog niet geïmplementeerd, gaat een class worden die berekeningen doet van pika's status
-- Singleton: nog niet geïmplementeerd, gaat gebruikt worden om de gameOver() aan te spreken
+Deelproduct
+
+- Interface: behavior van Pichu, Observer en Subject
+- Static Utility Method: SoundBuilder voor het makkelijk aanmaken van geluidjes
+- Singleton: Game is een singleton zodat gameOver() makkelijk aangesproken kan worden
 - Strategy: als pika peformBehavior aanroept wordt altijd het huidige gedrag uitgevoerd
 - Composition: Game heeft een pika, pika heeft een behavior
+
+Eindproduct
+
+- Abstract class: Pokepet. Door deze class kunnen er in te toekomst meerdere pokémons toegevoegd worden
+- State machine: Op basis van de staat van je pokepet (Pichu, Pikachu, Raichu) veranderen geluiden en sprites
+- Library: HowlerJS
+- Polymorphisme: bijv. o.notify() roept elke observer aan, maar er zijn verschillende observers
+
+Installatie
+
+- Clone repo
+- Open Visual Studio Code/Webstorm/Iets wat daar op lijkt
+- Run npm install Howler in je terminal
+- Open index.html in je browser
 
