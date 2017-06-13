@@ -9,7 +9,7 @@ class Sleeping implements Behavior, Observer {
     }
 
     notify(b: Number): void {
-        if(b == 75) {
+        if(b == Keys.A) {
             this.onSleeping();
         }
     }

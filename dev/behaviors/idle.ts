@@ -15,7 +15,7 @@ class Idle implements Behavior, Observer {
         if (this.first) {
             this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/idle.gif')";
             
-            let sound = SoundBuilder.getSound(this.pika.cur_state);
+            let sound = SoundBuilder.SoundBuilder.getSound(this.pika.cur_state);
             this.first = false;
         }
         this.pika.sleep += 0.002;
@@ -31,16 +31,16 @@ class Idle implements Behavior, Observer {
 
     notify(b: Number): void {
         switch (b) {
-            case 87:   
-            case 65:
-            case 68:
-            case 83:
+            case Keys.UP:   
+            case Keys.DOWN:
+            case Keys.LEFT:
+            case Keys.RIGHT:
                 console.log("arrows");
                 break;   
-            case 74:
+            case Keys.B:
                 this.onTraining();
                 break;
-            case 75:
+            case Keys.A:
                 this.onSleeping();
                 break;
             default:

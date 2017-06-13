@@ -69,11 +69,11 @@ class Training implements Behavior, Observer {
         if(this.training_key == this.userButton) {
             this.score++;
             console.log('yea')
-            SoundBuilder.getSoundOnce('right');
+            SoundBuilder.SoundBuilder.getSoundOnce('right');
         } else {
             this.score--;
             console.log('noh')
-            SoundBuilder.getSoundOnce('wrong');
+            SoundBuilder.SoundBuilder.getSoundOnce('wrong');
         }  
 
         if(count > 9) {

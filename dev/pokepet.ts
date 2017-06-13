@@ -4,8 +4,6 @@ abstract class Pokepet {
     public happiness:number;
 
     public div:HTMLElement;
-    public x:number;
-    public y:number;
 
     public states: Array<String>;
     public speed: number;

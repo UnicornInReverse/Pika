@@ -9,8 +9,6 @@ class Pika extends Pokepet{
         parent.appendChild(this.div);
 
         // start instellingen
-        this.x = 0;
-        this.y = 220;
         this.xp = 5;
         this.sleep = 0;
         this.happiness = 30;

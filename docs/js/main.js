@@ -36,7 +36,7 @@ var Idle = (function () {
     Idle.prototype.performBehavior = function () {
         if (this.first) {
             this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/idle.gif')";
-            var sound = SoundBuilder.getSound(this.pika.cur_state);
+            var sound = SoundBuilder.SoundBuilder.getSound(this.pika.cur_state);
             this.first = false;
         }
         this.pika.sleep += 0.002;
@@ -51,16 +51,16 @@ var Idle = (function () {
     };
     Idle.prototype.notify = function (b) {
         switch (b) {
-            case 87:
-            case 65:
-            case 68:
-            case 83:
+            case Keys.UP:
+            case Keys.DOWN:
+            case Keys.LEFT:
+            case Keys.RIGHT:
                 console.log("arrows");
                 break;
-            case 74:
+            case Keys.B:
                 this.onTraining();
                 break;
-            case 75:
+            case Keys.A:
                 this.onSleeping();
                 break;
             default:
@@ -90,7 +90,7 @@ var Sleeping = (function () {
         this.controls.subscribe(this);
     }
     Sleeping.prototype.notify = function (b) {
-        if (b == 75) {
+        if (b == Keys.A) {
             this.onSleeping();
         }
     };
@@ -155,12 +155,12 @@ var Training = (function () {
         if (this.training_key == this.userButton) {
             this.score++;
             console.log('yea');
-            SoundBuilder.getSoundOnce('right');
+            SoundBuilder.SoundBuilder.getSoundOnce('right');
         }
         else {
             this.score--;
             console.log('noh');
-            SoundBuilder.getSoundOnce('wrong');
+            SoundBuilder.SoundBuilder.getSoundOnce('wrong');
         }
         if (count > 9) {
             clearInterval(trainInterval);
@@ -266,8 +266,6 @@ var Pika = (function (_super) {
         this.div = document.createElement("pika");
         this.states = new Array("Pichu", "Pikachu", "Raichu");
         parent.appendChild(this.div);
-        this.x = 0;
-        this.y = 220;
         this.xp = 5;
         this.sleep = 0;
         this.happiness = 30;
@@ -320,25 +318,38 @@ var Game = (function () {
 window.addEventListener("load", function () {
     var g = Game.getInstance();
 });
-var SoundBuilder = (function () {
-    function SoundBuilder() {
-    }
-    SoundBuilder.getSound = function (name) {
-        var sound = new Howl({
-            src: ['sounds/' + name + '.wav'],
-            volume: 0.2
-        });
-        sound.play();
-    };
-    SoundBuilder.getSoundOnce = function (name) {
-        var sound = new Howl({
-            src: ['sounds/' + name + '.wav']
-        });
-        sound.play();
-        sound.on('end', function () {
-            sound.stop();
-        });
-    };
-    return SoundBuilder;
-}());
+var Keys;
+(function (Keys) {
+    Keys[Keys["UP"] = 87] = "UP";
+    Keys[Keys["DOWN"] = 83] = "DOWN";
+    Keys[Keys["LEFT"] = 65] = "LEFT";
+    Keys[Keys["RIGHT"] = 68] = "RIGHT";
+    Keys[Keys["A"] = 74] = "A";
+    Keys[Keys["B"] = 75] = "B";
+})(Keys || (Keys = {}));
+var SoundBuilder;
+(function (SoundBuilder_1) {
+    var SoundBuilder = (function () {
+        function SoundBuilder() {
+        }
+        SoundBuilder.getSound = function (name) {
+            var sound = new Howl({
+                src: ['sounds/' + name + '.wav'],
+                volume: 0.2
+            });
+            sound.play();
+        };
+        SoundBuilder.getSoundOnce = function (name) {
+            var sound = new Howl({
+                src: ['sounds/' + name + '.wav']
+            });
+            sound.play();
+            sound.on('end', function () {
+                sound.stop();
+            });
+        };
+        return SoundBuilder;
+    }());
+    SoundBuilder_1.SoundBuilder = SoundBuilder;
+})(SoundBuilder || (SoundBuilder = {}));
 //# sourceMappingURL=main.js.map
