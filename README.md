@@ -38,12 +38,12 @@ Installatie
 
 Controls 
 
-UP - W
-DOWN - S
-LEFT - A
-RIGHT - D
-A-BUTTON - J
-B-BUTTON - K
+- UP - W
+- DOWN - S
+- LEFT - A
+- RIGHT - D
+- A-BUTTON - J
+- B-BUTTON - K
 
 
 
