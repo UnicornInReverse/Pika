@@ -67,7 +67,7 @@ Pichu is een kleine pokémon die jij moet gaan trainen om een Raichu te worden.
 
 ## UML
 
-UML geeft de game weer zoals hij nu is. Hij is zo opgesteld dat er gemakkelijk nieuw behavior toegevoegd kan worden. 
+UML geeft de game weer zoals hij nu is. Hij is zo opgesteld dat er gemakkelijk nieuw behavior toegevoegd kan worden. UML hieronder klopt niet helemaal, volledige is (https://drive.google.com/a/hr.nl/file/d/0BxFr1ACpc0dFZGJMZmFBSGRqT3M/view?usp=sharing hier) te vinden. 
 
 ![UML](https://github.com/UnicornInReverse/Pika/blob/master/docs/PokepetUML.png)
 
