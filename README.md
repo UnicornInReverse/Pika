@@ -61,7 +61,7 @@ Installatie
 
 - Je code ziet er overzichtelijk uit hoe het er nu staat. De game werkt ook goed.
 - Als je code schrijft is het handig als je commentaar schrijft bij je code. Als je je code over een lange tijd weer gaat bekijken weet je zo waar het over gaat. Ook anderen weten gelijk wat alle code betekent.
-- Zonder uitleg was het niet zo duidelijk hoe de game precies werkte. Na je uitleg was het goed te volgen.
+- Zonder uitleg was het niet zo duidelijk hoe de game precies werkte (staat inmiddels in je aangepaste readme). Na je uitleg was het goed te volgen.
 - Laat mensen niet zo stressen met het indrukken van de toetsen ;)
 
 Project is een voldoende!
