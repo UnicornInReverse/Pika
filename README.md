@@ -36,3 +36,14 @@ Installatie
 - Run npm install Howler in je terminal
 - Open index.html in je browser
 
+Controls 
+
+UP - W
+DOWN - S
+LEFT - A
+RIGHT - D
+A-BUTTON - J
+B-BUTTON - K
+
+
+
