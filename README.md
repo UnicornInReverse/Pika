@@ -36,3 +36,32 @@ Installatie
 - Run npm install Howler in je terminal
 - Open index.html in je browser
 
+# Peer review Robin week 7
+
+## Toepassingen
+
+- Klassendiagram: In je UML zijn een paar onderdelen minder goed zichtbaar. Er staan wat lege plusjes en minnetjes in. Je hebt 2x een Subject in je UML staan en geen Observer. 1 Daarvan moet Observer zijn. In je Subject rechtsboven staat niet of die functies public, private of protected zijn.
+- Speelbare game met begin en eind: Game is speelbaar met een einde (XP of als je doodgaat).
+- Library: HowlerJS gebruikt.
+- Encapsulation: Encapsulation is op een goede manier gebruikt.
+- Composition: Composition is juist toegepast in de code.
+- Inheritance: Pika is een Pokepet. Overerving is goed gebruikt.
+- Singleton: Singleton wordt juist gemaakt in game.ts en gebruikt in idle.ts.
+- Observer: Observer is juist gebruikt met Observer + Subject en de functies die erbij horen.
+- Strategy: Strategy Pattern is juist gebruikt. Een gedrag wordt de hele tijd uitgevoerd tenzij je op een andere knop drukt.
+- Interface: Interface is goed geimplementeerd
+- Static: Static wordt op een goede manier gebruikt in sound.ts.
+- Abstract: Abstracte class is gebruikt in pokepet.ts. 
+- Namespaces: Namespaces wordt bij 1 class gebruikt (sound.ts). Met namespaces kan je verschillende classes met dezelfde naam een aparte namespace meegeven. Voor 1 class heeft het niet heel veel zin.
+- Polymorphisme: Zoals je al zei roept o.notify() elke observer aan.
+- Enumerations: Enumerations is goed gebruikt in keys.ts.
+- Game Loop: GameLoop zit in game.ts
+
+## Feedback
+
+- Je code ziet er overzichtelijk uit hoe het er nu staat. De game werkt ook goed.
+- Als je code schrijft is het handig als je commentaar schrijft bij je code. Als je je code over een lange tijd weer gaat bekijken weet je zo waar het over gaat. Ook anderen weten gelijk wat alle code betekent.
+- Zonder uitleg was het niet zo duidelijk hoe de game precies werkte. Na je uitleg was het goed te volgen.
+- Laat mensen niet zo stressen met het indrukken van de toetsen ;)
+
+Project is een voldoende!
