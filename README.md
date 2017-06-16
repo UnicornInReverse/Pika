@@ -1,6 +1,6 @@
 ## Code review
 
-Code review:
+<b>Code review:</b>
 
 De code was snel te begrijpen. Er waren alleen geen comments maar deze waren ook niet nodig de code spreekt voor zich.
 </br></br>
