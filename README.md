@@ -3,21 +3,21 @@
 Code review:
 
 De code was snel te begrijpen. Er waren alleen geen comments maar deze waren ook niet nodig de code spreekt voor zich.
-
-Encapulation - Gedaan
-Composition - Gedaan
-Inheritance - Gedaan
-Singleton - Gedaan
-Stratagy - Gedaan
-Observer - Gedaan
-Interface - Gedaan
-Static - Gedaan
-Abstract - Gedaan
-Namespaces - Gedaan
-Polymorphism - Gedaan
-Enumerations - Gedaan
-Game loop - Gedaan
-Library - Aanwezig hier wordt howler voor gebruikt.
+</br></br>
+Encapulation - Gedaan</br>
+Composition - Gedaan</br>
+Inheritance - Gedaan</br>
+Singleton - Gedaan</br>
+Stratagy - Gedaan</br>
+Observer - Gedaan</br>
+Interface - Gedaan</br>
+Static - Gedaan</br>
+Abstract - Gedaan</br>
+Namespaces - Gedaan</br>
+Polymorphism - Gedaan</br>
+Enumerations - Gedaan</br>
+Game loop - Gedaan</br>
+Library - Aanwezig hier wordt howler voor gebruikt.</br>
 
 Klassendiagram:
 Klassendiagram klopt niet helemaal:
