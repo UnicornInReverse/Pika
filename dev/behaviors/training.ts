@@ -57,10 +57,9 @@ class Training implements Behavior, Observer {
                            
     }
 
-    private createRandomButton() {
-        let number = Math.floor(Math.random()* 6);
-        this.training_key = this.Buttons[number];
-
+    public createRandomButton() {
+        //create random number via Util.Random(min, max);
+        this.training_key = this.Buttons[Util.random(0,5)];
         this.training.style.background = "url('images/buttons/" + this.training_key + ".png')";
     }
 
@@ -75,6 +74,8 @@ class Training implements Behavior, Observer {
             console.log('noh')
             SoundBuilder.SoundBuilder.getSoundOnce('wrong');
         }  
+
+
 
         if(count > 9) {
             clearInterval(trainInterval);

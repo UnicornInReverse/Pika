@@ -14,7 +14,6 @@ class Idle implements Behavior, Observer {
     performBehavior(): void {
         if (this.first) {
             this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/idle.gif')";
-            
             let sound = SoundBuilder.SoundBuilder.getSound(this.pika.cur_state);
             this.first = false;
         }
@@ -31,9 +30,6 @@ class Idle implements Behavior, Observer {
 
     notify(b: Number): void {
         switch (b) {
-            case Keys.UP:   
-            case Keys.DOWN:
-            case Keys.LEFT:
             case Keys.RIGHT:
                 console.log("arrows");
                 break;   

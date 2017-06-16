@@ -11,10 +11,6 @@ abstract class Pokepet {
 
     public _behavior:Behavior;
 
-    constructor() {
-        
-    }
-
     public get behavior():Behavior {
         return this._behavior
     }
