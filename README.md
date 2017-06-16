@@ -1,5 +1,24 @@
 ## Code review
 
+<b>Code review:</b>
+
+De code was snel te begrijpen. Er waren alleen geen comments maar deze waren ook niet nodig de code spreekt voor zich.
+</br></br>
+Encapulation - Gedaan</br>
+Composition - Gedaan</br>
+Inheritance - Gedaan</br>
+Singleton - Gedaan</br>
+Stratagy - Gedaan</br>
+Observer - Gedaan</br>
+Interface - Gedaan</br>
+Static - Gedaan</br>
+Abstract - Gedaan</br>
+Namespaces - Gedaan</br>
+Polymorphism - Gedaan</br>
+Enumerations - Gedaan</br>
+Game loop - Gedaan</br>
+Library - Aanwezig hier wordt howler voor gebruikt.</br>
+
 Klassendiagram:
 Klassendiagram klopt niet helemaal:
 Onderaan heb je de interface Subject dat moet Observer zijn.

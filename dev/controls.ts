@@ -19,7 +19,12 @@ class Controls implements Subject{
     }
 
     unsubscribe(o:Observer) {
-        this.observers.splice(0, 1);
+        //now there could be more then 1 observers.
+        for(let i = 0; i < this.observers.length; i++){
+            if(this.observers[i] == o){
+                this.observers.splice(i, 1);
+            }
+        }
     }
 
     public onKeyDown(event: KeyboardEvent):void {

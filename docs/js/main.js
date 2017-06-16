@@ -3,180 +3,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Fled = (function () {
-    function Fled(p, c) {
-        this.pika = p;
-        this.controls = c;
-        this.controls.subscribe(this);
-        Game.getInstance().gameOver(false);
-        this.performBehavior();
-    }
-    Fled.prototype.notify = function () {
-        console.log("Fuck this shit I'm out");
-    };
-    Fled.prototype.performBehavior = function () {
-    };
-    Fled.prototype.onPet = function () {
-    };
-    Fled.prototype.onSleeping = function () {
-    };
-    Fled.prototype.onTraining = function () {
-    };
-    return Fled;
-}());
-var Idle = (function () {
-    function Idle(p, c) {
-        var _this = this;
-        this.first = true;
-        c.subscribe(this);
-        this.pika = p;
-        this.controls = c;
-        this.pika.div.addEventListener("click", function () { return _this.onPet(); });
-    }
-    Idle.prototype.performBehavior = function () {
-        if (this.first) {
-            this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/idle.gif')";
-            var sound = SoundBuilder.SoundBuilder.getSound(this.pika.cur_state);
-            this.first = false;
-        }
-        this.pika.sleep += 0.002;
-        if (this.pika.xp < 1 || this.pika.happiness < 25) {
-            this.pika.behavior = new Fled(this.pika, this.controls);
-            this.controls.unsubscribe(this);
-        }
-        else if (this.pika.xp > 99) {
-            this.controls.unsubscribe(this);
-            Game.getInstance().gameOver(true);
-        }
-    };
-    Idle.prototype.notify = function (b) {
-        switch (b) {
-            case Keys.UP:
-            case Keys.DOWN:
-            case Keys.LEFT:
-            case Keys.RIGHT:
-                console.log("arrows");
-                break;
-            case Keys.B:
-                this.onTraining();
-                break;
-            case Keys.A:
-                this.onSleeping();
-                break;
-            default:
-                break;
-        }
-    };
-    Idle.prototype.onPet = function () {
-        this.pika.happiness += 1;
-    };
-    Idle.prototype.onSleeping = function () {
-        this.pika.behavior = new Sleeping(this.pika, this.controls);
-        this.controls.unsubscribe(this);
-    };
-    Idle.prototype.onTraining = function () {
-        if (this.pika.sleep > 69) {
-            this.pika.happiness -= 10;
-        }
-        this.pika.behavior = new Training(this.pika, this.controls);
-        this.controls.unsubscribe(this);
-    };
-    return Idle;
-}());
-var Sleeping = (function () {
-    function Sleeping(p, c) {
-        this.pika = p;
-        this.controls = c;
-        this.controls.subscribe(this);
-    }
-    Sleeping.prototype.notify = function (b) {
-        if (b == Keys.A) {
-            this.onSleeping();
-        }
-    };
-    Sleeping.prototype.performBehavior = function () {
-        this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/sleeping.gif')";
-        this.pika.sleep -= 0.02;
-    };
-    Sleeping.prototype.onPet = function () {
-    };
-    Sleeping.prototype.onSleeping = function () {
-        this.pika.behavior = new Idle(this.pika, this.controls);
-        this.controls.unsubscribe(this);
-    };
-    Sleeping.prototype.onTraining = function () {
-    };
-    return Sleeping;
-}());
-var Training = (function () {
-    function Training(p, c) {
-        var _this = this;
-        this.pika = p;
-        this.controls = c;
-        this.Buttons = new Array(87, 83, 65, 68, 74, 75);
-        this.training = document.createElement("countdown");
-        var parent = document.getElementById("container");
-        parent.appendChild(this.training);
-        this.training.style.display = "block";
-        setTimeout(function () {
-            _this.training.style.background = "none";
-            _this.onTraining();
-        }, 2500);
-    }
-    Training.prototype.notify = function (b) {
-        this.userButton = b;
-    };
-    Training.prototype.performBehavior = function () {
-    };
-    Training.prototype.onPet = function () {
-    };
-    Training.prototype.onSleeping = function () {
-    };
-    Training.prototype.onTraining = function () {
-        var _this = this;
-        this.score = 0;
-        var count = 0;
-        this.pika.div.style.transform = "translate(200px, 40px)";
-        this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/attack-1.gif')";
-        this.controls.subscribe(this);
-        this.createRandomButton();
-        var trainInterval = setInterval(function () {
-            count++;
-            _this.checkTraining(count, trainInterval);
-        }, this.pika.speed);
-    };
-    Training.prototype.createRandomButton = function () {
-        var number = Math.floor(Math.random() * 6);
-        this.training_key = this.Buttons[number];
-        this.training.style.background = "url('images/buttons/" + this.training_key + ".png')";
-    };
-    Training.prototype.checkTraining = function (count, trainInterval) {
-        console.log(this.score);
-        if (this.training_key == this.userButton) {
-            this.score++;
-            console.log('yea');
-            SoundBuilder.SoundBuilder.getSoundOnce('right');
-        }
-        else {
-            this.score--;
-            console.log('noh');
-            SoundBuilder.SoundBuilder.getSoundOnce('wrong');
-        }
-        if (count > 9) {
-            clearInterval(trainInterval);
-            this.training.style.background = "none";
-            this.pika.div.style.transform = "translate(282px, 140px)";
-            this.controls.unsubscribe(this);
-            this.pika.sleep += 10;
-            this.pika.xp += this.score.valueOf();
-            this.pika.behavior = new Idle(this.pika, this.controls);
-        }
-        else {
-            this.createRandomButton();
-        }
-    };
-    return Training;
-}());
 var Controls = (function () {
     function Controls() {
         var _this = this;
@@ -194,7 +20,11 @@ var Controls = (function () {
         this.observers.push(o);
     };
     Controls.prototype.unsubscribe = function (o) {
-        this.observers.splice(0, 1);
+        for (var i = 0; i < this.observers.length; i++) {
+            if (this.observers[i] == o) {
+                this.observers.splice(i, 1);
+            }
+        }
     };
     Controls.prototype.onKeyDown = function (event) {
         var button = "button" + event.keyCode;
@@ -352,4 +182,182 @@ var SoundBuilder;
     }());
     SoundBuilder_1.SoundBuilder = SoundBuilder;
 })(SoundBuilder || (SoundBuilder = {}));
+var Util = (function () {
+    function Util() {
+    }
+    Util.random = function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+    return Util;
+}());
+var Fled = (function () {
+    function Fled(p, c) {
+        this.pika = p;
+        this.controls = c;
+        this.controls.subscribe(this);
+        Game.getInstance().gameOver(false);
+        this.performBehavior();
+    }
+    Fled.prototype.notify = function () {
+        console.log("Fuck this shit I'm out");
+    };
+    Fled.prototype.performBehavior = function () {
+    };
+    Fled.prototype.onPet = function () {
+    };
+    Fled.prototype.onSleeping = function () {
+    };
+    Fled.prototype.onTraining = function () {
+    };
+    return Fled;
+}());
+var Idle = (function () {
+    function Idle(p, c) {
+        var _this = this;
+        this.first = true;
+        c.subscribe(this);
+        this.pika = p;
+        this.controls = c;
+        this.pika.div.addEventListener("click", function () { return _this.onPet(); });
+    }
+    Idle.prototype.performBehavior = function () {
+        if (this.first) {
+            this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/idle.gif')";
+            var sound = SoundBuilder.SoundBuilder.getSound(this.pika.cur_state);
+            this.first = false;
+        }
+        this.pika.sleep += 0.002;
+        if (this.pika.xp < 1 || this.pika.happiness < 25) {
+            this.pika.behavior = new Fled(this.pika, this.controls);
+            this.controls.unsubscribe(this);
+        }
+        else if (this.pika.xp > 99) {
+            this.controls.unsubscribe(this);
+            Game.getInstance().gameOver(true);
+        }
+    };
+    Idle.prototype.notify = function (b) {
+        switch (b) {
+            case Keys.RIGHT:
+                console.log("arrows");
+                break;
+            case Keys.B:
+                this.onTraining();
+                break;
+            case Keys.A:
+                this.onSleeping();
+                break;
+            default:
+                break;
+        }
+    };
+    Idle.prototype.onPet = function () {
+        this.pika.happiness += 1;
+    };
+    Idle.prototype.onSleeping = function () {
+        this.pika.behavior = new Sleeping(this.pika, this.controls);
+        this.controls.unsubscribe(this);
+    };
+    Idle.prototype.onTraining = function () {
+        if (this.pika.sleep > 69) {
+            this.pika.happiness -= 10;
+        }
+        this.pika.behavior = new Training(this.pika, this.controls);
+        this.controls.unsubscribe(this);
+    };
+    return Idle;
+}());
+var Sleeping = (function () {
+    function Sleeping(p, c) {
+        this.pika = p;
+        this.controls = c;
+        this.controls.subscribe(this);
+    }
+    Sleeping.prototype.notify = function (b) {
+        if (b == Keys.A) {
+            this.onSleeping();
+        }
+    };
+    Sleeping.prototype.performBehavior = function () {
+        this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/sleeping.gif')";
+        this.pika.sleep -= 0.02;
+    };
+    Sleeping.prototype.onPet = function () {
+    };
+    Sleeping.prototype.onSleeping = function () {
+        this.pika.behavior = new Idle(this.pika, this.controls);
+        this.controls.unsubscribe(this);
+    };
+    Sleeping.prototype.onTraining = function () {
+    };
+    return Sleeping;
+}());
+var Training = (function () {
+    function Training(p, c) {
+        var _this = this;
+        this.pika = p;
+        this.controls = c;
+        this.Buttons = new Array(87, 83, 65, 68, 74, 75);
+        this.training = document.createElement("countdown");
+        var parent = document.getElementById("container");
+        parent.appendChild(this.training);
+        this.training.style.display = "block";
+        setTimeout(function () {
+            _this.training.style.background = "none";
+            _this.onTraining();
+        }, 2500);
+    }
+    Training.prototype.notify = function (b) {
+        this.userButton = b;
+    };
+    Training.prototype.performBehavior = function () {
+    };
+    Training.prototype.onPet = function () {
+    };
+    Training.prototype.onSleeping = function () {
+    };
+    Training.prototype.onTraining = function () {
+        var _this = this;
+        this.score = 0;
+        var count = 0;
+        this.pika.div.style.transform = "translate(200px, 40px)";
+        this.pika.div.style.backgroundImage = "url('images/" + this.pika.cur_state + "/attack-1.gif')";
+        this.controls.subscribe(this);
+        this.createRandomButton();
+        var trainInterval = setInterval(function () {
+            count++;
+            _this.checkTraining(count, trainInterval);
+        }, this.pika.speed);
+    };
+    Training.prototype.createRandomButton = function () {
+        this.training_key = this.Buttons[Util.random(0, 5)];
+        this.training.style.background = "url('images/buttons/" + this.training_key + ".png')";
+    };
+    Training.prototype.checkTraining = function (count, trainInterval) {
+        console.log(this.score);
+        if (this.training_key == this.userButton) {
+            this.score++;
+            console.log('yea');
+            SoundBuilder.SoundBuilder.getSoundOnce('right');
+        }
+        else {
+            this.score--;
+            console.log('noh');
+            SoundBuilder.SoundBuilder.getSoundOnce('wrong');
+        }
+        if (count > 9) {
+            clearInterval(trainInterval);
+            this.training.style.background = "none";
+            this.pika.div.style.transform = "translate(282px, 140px)";
+            this.controls.unsubscribe(this);
+            this.pika.sleep += 10;
+            this.pika.xp += this.score.valueOf();
+            this.pika.behavior = new Idle(this.pika, this.controls);
+        }
+        else {
+            this.createRandomButton();
+        }
+    };
+    return Training;
+}());
 //# sourceMappingURL=main.js.map
